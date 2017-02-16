@@ -1,7 +1,15 @@
 {
     "name": "asuran/yii-monolog",
     "description": "Extension for using monolog with yii 1.x",
-    "type": "project",
+    "keywords": ["monolog", "yii", "log", "error", "exception", "debug", "monitoring"],
+    "type": "package",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Dmitriy Sergeev",
+            "email": "dm.s.s@yandex.ru"
+        }
+    ],
     "require": {
         "php": ">=5.4",
         "yiisoft/yii": "~1.1.14",
