@@ -20,6 +20,9 @@ class MonologErrorHandler extends \CErrorHandler
         parent::init();
         $logger = Registry::getInstance($this->loggerName);
         $this->errorHandler = new ErrorHandler($logger);
+
+        $this->errorHandler->registerErrorHandler();
+        $this->errorHandler->registerExceptionHandler();
     }
 
     /**
