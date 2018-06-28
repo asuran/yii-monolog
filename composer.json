@@ -1,5 +1,5 @@
 {
-    "name": "asuran/yii-monolog",
+    "name": "fidelize/yii-monolog",
     "description": "Extension for using monolog with yii 1.x",
     "keywords": ["monolog", "yii", "log", "error", "exception", "debug", "monitoring"],
     "type": "package",
