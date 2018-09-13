@@ -79,3 +79,31 @@ return [
     ],
 ];
 ```
+
+5. Use it
+```php
+<?php
+
+# Using info with variables
+Yii::log("A new store user did a self-register on the system", \Monolog\Logger::INFO, [
+                    'id' => $form->usuario->id,
+                    'category' => 'users',
+                ]);
+
+# Using debug with variables
+Yii::log("Info about the new store user created", \Monolog\Logger::DEBUG, [
+                    'id' => $form->usuario->id,
+                    'cnpj' => $form->usuario->usu_login,
+                    'email' => $form->usuario->usu_email,
+                    'category' => 'users',
+                    ]);
+
+# Using error without variables.
+# System will convert the 3th parameter in "category" parameter and store it as an array of variables
+# This first example keeps the Yii::log compatible with old logs in your system
+Yii::log("File not found", CLogger::LEVEL_ERROR, "command.gearman");
+
+# This another example allows to use all monolog levels for messages
+Yii::log("File not found", \Monolog\Logger::ERROR, "command.gearman");  
+
+```

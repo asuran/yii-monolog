@@ -35,9 +35,28 @@ class MonologLogRoute extends \CLogRoute
             $this->logger->log(
                 $level,
                 $log[0],
-                is_array($log[2]) ? $log[2] : ['category' => $log[2]]
+                $this->resolveLogVariables($log[2])
             );
         }
+    }
+
+    /**
+     * If receiving an array as 3th parameter in Yii::log(), log it as variables
+     * If receiving a string (category_log as default in Yii), transform it in an array and log it
+     * @param $data array|string
+     * @return array
+     */
+    private function resolveLogVariables($data)
+    {
+        if (empty($data)) {
+            return [];
+        }
+        if (is_array($data)) {
+            return $data;
+        }
+        return [
+            defined('VAR_LOG_CATEGORY_NAME') ? VAR_LOG_CATEGORY_NAME : 'categoria' => $data,
+        ];
     }
 
     /**
