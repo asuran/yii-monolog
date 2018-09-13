@@ -29,7 +29,7 @@ class MonologLogRoute extends \CLogRoute
     {
         foreach ($logs as $log) {
             $level = $this->levelToString($log[1]);
-            if ($level === 'DEBUG' && !empty(getenv('APP_DEBUG')) && getenv('APP_DEBUG') == 'false') {
+            if ($level === 'DEBUG' && ((defined('YII_DEBUG') && YII_DEBUG == false) || !defined('YII_DEBUG'))) {
                 continue;
             }
             $this->logger->log(
