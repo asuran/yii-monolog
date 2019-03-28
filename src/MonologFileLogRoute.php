@@ -54,6 +54,7 @@ class MonologFileLogRoute extends \CLogRoute
             'class' => 'Monolog\Handler\StreamHandler',
             'stream' => $this->stream,
             'formatter' => $this->formatter,
+            'filePermission' => 0777,
         ]));
 
         foreach ($this->processors as $processor) {
