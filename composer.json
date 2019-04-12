@@ -7,16 +7,31 @@
     "authors": [
         {
             "name": "Dmitriy Sergeev",
-            "email": "dm.s.s@yandex.ru"
+            "email": "dm.s.s@yandex.ru",
+            "role": "Creator"
+        },
+        {
+            "name": "Funcional Heath Tech",
+            "homepage": "https://www.funcionalcorp.com.br",
+            "role": "Company"
+        },
+        {
+            "name": "Alan Willms",
+            "email": "alanwillms@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Leonardo Gomes",
+            "email": "lenardo.delfica@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
         "php": ">=5.4",
-        "yiisoft/yii": "~1.1.14",
-        "monolog/monolog": "@stable"
+        "monolog/monolog": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8"
+        "phpunit/phpunit": "*"
     },
     "autoload": {
         "psr-4": {
