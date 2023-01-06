@@ -68,74 +68,6 @@ class MonologFileLogRoute extends \CLogRoute
     }
 
     /**
-     * @param string|array $config
-     *
-     * @throws RuntimeException
-     * @return HandlerInterface
-     */
-    protected function createHandler($config)
-    {
-        if (isset($config['formatter'])) {
-            $formatterConfig = $config['formatter'];
-            unset($config['formatter']);
-        }
-
-        /** @var HandlerInterface $instance */
-        if (is_array($config)) {
-            $instance = call_user_func_array(['Yii', 'createComponent'], $config);
-        } else {
-            $instance = \Yii::createComponent($config);
-        }
-
-        if (isset($formatterConfig)) {
-            $formatter = $this->createFormatter($formatterConfig);
-            $instance->setFormatter($formatter);
-        }
-
-        return $instance;
-    }
-
-    /**
-     * @param array|string $config
-     *
-     * @throws RuntimeException
-     * @return Closure
-     */
-    protected function createProcessor($config)
-    {
-        try {
-            if (is_array($config)) {
-                $instance = call_user_func_array(['Yii', 'createComponent'], $config);
-            } else {
-                $instance = \Yii::createComponent($config);
-            }
-            if (is_callable($instance)) {
-                return $instance;
-            }
-        } catch(Exception $exception) {}
-
-        throw new RuntimeException(
-            'Unknown processor type, must be a Closure or a valid config for an invokable component'
-        );
-    }
-
-    /**
-     * @param string|array $config
-     *
-     * @return FormatterInterface
-     */
-    protected function createFormatter($config)
-    {
-        if (is_array($config)) {
-            $instance = call_user_func_array(['Yii', 'createComponent'], $config);
-        } else {
-            $instance = \Yii::createComponent($config);
-        }
-
-        return $instance;
-    }
-
-    /**
      * @inheritdoc
      */
     protected function processLogs($logs)
@@ -174,6 +106,6 @@ class MonologFileLogRoute extends \CLogRoute
             return Logger::getLevelName($level);
         }
 
-        throw new InvalidArgumentException("Level ${level} not allowed for logs");
+        throw new InvalidArgumentException("Level $level not allowed for logs");
     }
 }

@@ -2,24 +2,72 @@
 
 namespace YiiMonolog;
 
+use Monolog\Formatter\FormatterInterface;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Monolog\Registry;
+use Psr\Log\LogLevel;
 
 class MonologLogRoute extends \CLogRoute
 {
-    /** @var string */
-    public $loggerName = 'main';
+    const FILE_PERMISSION = 0666;
+
     /** @var LoggerInterface */
     protected $logger;
+
+    /** @var string */
+    public $name = 'application';
+
+    /** @var FormatterInterface */
+    public $formatter;
+
+    /** @var string */
+    public $stream;
+
+    /** @var array */
+    public $processors = [];
 
     /**
      * @inheritdoc
      */
     public function init()
     {
-        $this->logger = Registry::getInstance($this->loggerName);
+        $this->logger = $this->getMonolog();
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    protected function getMonolog()
+    {
+        $key = md5(serialize([
+            $this->name,
+            $this->formatter,
+            $this->stream,
+            $this->processors
+        ]));
+
+        if (Registry::hasLogger($key)) {
+            return Registry::getInstance($key);
+        }
+
+        $logger = new Logger($this->name);
+
+        // Create a handler
+        $handler = new StreamHandler($this->stream, LogLevel::DEBUG, true, self::FILE_PERMISSION);
+        $handler->setFormatter($this->formatter);
+
+        $logger->pushHandler($handler);
+
+        foreach ($this->processors as $processor) {
+            $logger->pushProcessor(new $processor());
+        }
+
+        Registry::addLogger($logger, $key);
+
+        return $logger;
     }
 
     /**
